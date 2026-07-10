@@ -33,9 +33,9 @@ export function Dashboard({
   metrics: Metrics
 }) {
   const [search, setSearch] = useState("")
-  const [status, setStatus] = useState<string>("all")
-  const [urgency, setUrgency] = useState<string>("all")
-  const [project, setProject] = useState<string>("all")
+  const [status, setStatus] = useState<string | null>("all")
+  const [urgency, setUrgency] = useState<string | null>("all")
+  const [project, setProject] = useState<string | null>("all")
 
   const filtered = useMemo(() => {
     return tickets.filter((t) => {
