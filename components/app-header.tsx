@@ -43,7 +43,7 @@ export function AppHeader({
             <Ticket className="size-4" aria-hidden />
           </span>
           <span className="text-sm font-semibold tracking-tight">
-            Panel de Tickets
+            Ticket Management
           </span>
         </Link>
 
