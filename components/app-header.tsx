@@ -48,23 +48,17 @@ export function AppHeader({
         </Link>
 
         <div className="flex items-center gap-2">
-          <Button asChild size="sm">
-            <Link href="/tickets/new">
-              <Plus className="size-4" aria-hidden />
-              <span className="hidden sm:inline">Nuevo ticket</span>
-            </Link>
+          <Button onClick={() => window.location.href = '/tickets/new'} size="sm">
+            <Plus className="size-4" aria-hidden />
+            <span className="hidden sm:inline">Nuevo ticket</span>
           </Button>
 
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="outline"
-                size="icon"
-                className="rounded-full"
-                aria-label="Menú de usuario"
-              >
+            <DropdownMenuTrigger render={
+              <Button variant="outline" size="icon" className="rounded-full" aria-label="Menú de usuario">
                 <span className="text-xs font-medium">{initials}</span>
               </Button>
+            }>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-52">
               <DropdownMenuLabel className="flex flex-col gap-0.5">

@@ -95,7 +95,7 @@ export function TicketForm({
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-6">
       <div className="flex items-center gap-3">
-        <Button asChild variant="ghost" size="icon" aria-label="Volver">
+        <Button onClick={() => window.location.href = '/'} variant="ghost" size="icon" aria-label="Volver">
           <Link href="/">
             <ArrowLeft className="size-4" aria-hidden />
           </Link>
@@ -194,7 +194,7 @@ export function TicketForm({
           {projects.length > 0 && (
             <div className="flex flex-col gap-2">
               <Label htmlFor="project">Proyecto</Label>
-              <Select value={projectId} onValueChange={setProjectId}>
+              <Select value={projectId} onValueChange={(v) => v?setProjectId(v):setProjectId(NO_PROJECT)} >
                 <SelectTrigger id="project" className="w-full">
                   <SelectValue placeholder="Sin proyecto" />
                 </SelectTrigger>
@@ -243,7 +243,7 @@ export function TicketForm({
       </div>
 
       <div className="flex items-center justify-end gap-3">
-        <Button asChild variant="outline" type="button">
+        <Button onClick={() => window.location.href = '/'} variant="outline" type="button">
           <Link href="/">Cancelar</Link>
         </Button>
         <Button type="submit" disabled={loading}>

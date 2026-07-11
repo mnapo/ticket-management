@@ -117,7 +117,7 @@ export function TicketTable({
               </TableCell>
               <TableCell className="hidden md:table-cell">
                 <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
+                  <DropdownMenuTrigger render={
                     <button
                       className="inline-flex items-center gap-1"
                       disabled={busyId === t.id}
@@ -126,6 +126,7 @@ export function TicketTable({
                       <StatusBadge status={t.status} />
                       <ChevronDown className="size-3 text-muted-foreground" aria-hidden />
                     </button>
+                  }>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="start">
                     <DropdownMenuLabel>Cambiar estado</DropdownMenuLabel>
@@ -153,13 +154,14 @@ export function TicketTable({
               </TableCell>
               <TableCell>
                 <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
+                  <DropdownMenuTrigger render={
                     <Button variant="ghost" size="icon" aria-label="Acciones">
                       <MoreHorizontal className="size-4" aria-hidden />
                     </Button>
+                  }>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <DropdownMenuItem asChild>
+                    <DropdownMenuItem>
                       <Link href={`/tickets/${t.id}`}>
                         <Pencil className="size-4" aria-hidden />
                         Editar
