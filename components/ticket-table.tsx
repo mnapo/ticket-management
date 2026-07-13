@@ -48,25 +48,25 @@ export function TicketTable({
         body: JSON.stringify({ status }),
       })
       if (!res.ok) throw new Error()
-      toast.success(`Estado actualizado a "${STATUS_META[status].label}"`)
+      toast.success(`Status updated to "${STATUS_META[status].label}"`)
       router.refresh()
     } catch {
-      toast.error("No se pudo actualizar el estado")
+      toast.error("Status couldn't be updated")
     } finally {
       setBusyId(null)
     }
   }
 
   async function remove(id: string) {
-    if (!confirm("¿Eliminar este ticket? Esta acción no se puede deshacer.")) return
+    if (!confirm("Delete ticket? This action can't be undone.")) return
     setBusyId(id)
     try {
       const res = await fetch(`/api/tickets/${id}`, { method: "DELETE" })
       if (!res.ok) throw new Error()
-      toast.success("Ticket eliminado")
+      toast.success("Ticket deleted")
       router.refresh()
     } catch {
-      toast.error("No se pudo eliminar el ticket")
+      toast.error("The ticket couldn't be deleted")
     } finally {
       setBusyId(null)
     }
@@ -75,9 +75,9 @@ export function TicketTable({
   if (tickets.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-border py-16 text-center">
-        <p className="text-sm font-medium">No hay tickets que coincidan</p>
+        <p className="text-sm font-medium">No matches</p>
         <p className="mt-1 text-sm text-muted-foreground">
-          Ajusta los filtros o crea un nuevo ticket.
+          Adjust the filters or create a new ticket.
         </p>
       </div>
     )
@@ -89,11 +89,11 @@ export function TicketTable({
         <TableHeader>
           <TableRow className="hover:bg-transparent">
             <TableHead className="w-16">#</TableHead>
-            <TableHead>Título</TableHead>
-            <TableHead className="hidden md:table-cell">Estado</TableHead>
-            <TableHead className="hidden sm:table-cell">Urgencia</TableHead>
-            <TableHead className="hidden lg:table-cell">Proyecto</TableHead>
-            <TableHead className="hidden lg:table-cell">Asignado</TableHead>
+            <TableHead>Title</TableHead>
+            <TableHead className="hidden md:table-cell">Status</TableHead>
+            <TableHead className="hidden sm:table-cell">Urgency</TableHead>
+            <TableHead className="hidden lg:table-cell">Project</TableHead>
+            <TableHead className="hidden lg:table-cell">Assigned</TableHead>
             <TableHead className="w-10" />
           </TableRow>
         </TableHeader>
@@ -129,7 +129,7 @@ export function TicketTable({
                   }>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="start">
-                    <DropdownMenuLabel>Cambiar estado</DropdownMenuLabel>
+                    <DropdownMenuLabel>Change status</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     {TICKET_STATUSES.map((s) => (
                       <DropdownMenuItem
@@ -164,7 +164,7 @@ export function TicketTable({
                     <DropdownMenuItem>
                       <Link href={`/tickets/${t.id}`}>
                         <Pencil className="size-4" aria-hidden />
-                        Editar
+                        Edit
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
@@ -173,7 +173,7 @@ export function TicketTable({
                       onClick={() => remove(t.id)}
                     >
                       <Trash2 className="size-4" aria-hidden />
-                      Eliminar
+                      Delete
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

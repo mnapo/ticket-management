@@ -50,7 +50,7 @@ export function AppHeader({
         <div className="flex items-center gap-2">
           <Button onClick={() => window.location.href = '/tickets/new'} size="sm">
             <Plus className="size-4" aria-hidden />
-            <span className="hidden sm:inline">Nuevo ticket</span>
+            <span className="hidden sm:inline">New ticket</span>
           </Button>
 
           <DropdownMenu>
@@ -73,7 +73,7 @@ export function AppHeader({
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleLogout} className="text-destructive">
                 <LogOut className="size-4" aria-hidden />
-                Cerrar sesión
+                Logout
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

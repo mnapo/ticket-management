@@ -16,25 +16,25 @@ const STATUS_BAR: Record<TicketStatus, string> = {
 export function MetricsCards({ metrics }: { metrics: Metrics }) {
   const cards = [
     {
-      label: "Total de tickets",
+      label: "Total",
       value: metrics.total,
       icon: Layers,
       tone: "text-foreground",
     },
     {
-      label: "Abiertos",
+      label: "Open",
       value: metrics.open,
       icon: FolderOpen,
       tone: "text-primary",
     },
     {
-      label: "Cerrados",
+      label: "Closed",
       value: metrics.closed,
       icon: CheckCircle2,
       tone: "text-status-cerrado-foreground",
     },
     {
-      label: "Críticos activos",
+      label: "Active Critical",
       value: metrics.critical,
       icon: AlertTriangle,
       tone: "text-urgency-critica-foreground",
@@ -44,7 +44,7 @@ export function MetricsCards({ metrics }: { metrics: Metrics }) {
   const maxStatus = Math.max(1, ...Object.values(metrics.byStatus))
 
   return (
-    <section aria-label="Métricas" className="flex flex-col gap-4">
+    <section aria-label="Metrics" className="flex flex-col gap-4">
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         {cards.map((c) => (
           <Card key={c.label} className="gap-0 p-4">
@@ -60,7 +60,7 @@ export function MetricsCards({ metrics }: { metrics: Metrics }) {
       </div>
 
       <Card className="gap-0 p-4">
-        <h2 className="text-sm font-medium">Distribución por estado</h2>
+        <h2 className="text-sm font-medium">Distribution by Status</h2>
         <div className="mt-4 flex flex-col gap-3">
           {(Object.keys(STATUS_META) as TicketStatus[]).map((status) => {
             const count = metrics.byStatus[status] ?? 0

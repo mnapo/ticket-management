@@ -50,9 +50,9 @@ export function Dashboard({
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Panel principal</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">Main panel</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Gestiona, filtra y monitorea todos los tickets del equipo.
+          Manage, filter and monitor all your team's tickets
         </p>
       </div>
 
@@ -74,18 +74,18 @@ export function Dashboard({
               <Input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Buscar por título..."
+                placeholder="Search by title..."
                 className="pl-9"
-                aria-label="Buscar tickets"
+                aria-label="Search tickets"
               />
             </div>
 
             <Select value={status} onValueChange={setStatus}>
-              <SelectTrigger className="w-full sm:w-40" aria-label="Filtrar por estado">
-                <SelectValue placeholder="Estado" />
+              <SelectTrigger className="w-full sm:w-40" aria-label="Filter by status">
+                <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Todos los estados</SelectItem>
+                <SelectItem value="all">Every status</SelectItem>
                 {TICKET_STATUSES.map((s) => (
                   <SelectItem key={s} value={s}>
                     {STATUS_META[s].label}
@@ -95,11 +95,11 @@ export function Dashboard({
             </Select>
 
             <Select value={urgency} onValueChange={setUrgency}>
-              <SelectTrigger className="w-full sm:w-36" aria-label="Filtrar por urgencia">
-                <SelectValue placeholder="Urgencia" />
+              <SelectTrigger className="w-full sm:w-36" aria-label="Filter by urgency">
+                <SelectValue placeholder="Urgency" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Toda urgencia</SelectItem>
+                <SelectItem value="all">Every Urgency</SelectItem>
                 {TICKET_URGENCIES.map((u) => (
                   <SelectItem key={u} value={u}>
                     {URGENCY_META[u].label}
@@ -110,11 +110,11 @@ export function Dashboard({
 
             {projects.length > 0 && (
               <Select value={project} onValueChange={setProject}>
-                <SelectTrigger className="w-full sm:w-40" aria-label="Filtrar por proyecto">
+                <SelectTrigger className="w-full sm:w-40" aria-label="Filter by project">
                   <SelectValue placeholder="Proyecto" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">Todos los proyectos</SelectItem>
+                  <SelectItem value="all">Every project</SelectItem>
                   {projects.map((p) => (
                     <SelectItem key={p.id} value={p.id}>
                       {p.name}

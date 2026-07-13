@@ -52,7 +52,7 @@ export function TicketForm({
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!title.trim()) {
-      toast.error("El título es obligatorio")
+      toast.error("Title is obligatory")
       return
     }
     setLoading(true)
@@ -83,11 +83,11 @@ export function TicketForm({
         },
       )
       if (!res.ok) throw new Error()
-      toast.success(isEdit ? "Ticket actualizado" : "Ticket creado")
+      toast.success(isEdit ? "Updated ticket" : "Created ticket")
       router.push("/")
       router.refresh()
     } catch {
-      toast.error("No se pudo guardar el ticket")
+      toast.error("Ticket couldn't be saved")
       setLoading(false)
     }
   }
@@ -102,12 +102,12 @@ export function TicketForm({
         </Button>
         <div>
           <h1 className="text-xl font-semibold tracking-tight">
-            {isEdit ? `Editar ticket #${String(ticket!.number).padStart(3, "0")}` : "Nuevo ticket"}
+            {isEdit ? `Edit ticket #${String(ticket!.number).padStart(3, "0")}` : "Nuevo ticket"}
           </h1>
           <p className="text-sm text-muted-foreground">
             {isEdit
-              ? "Actualiza los detalles y el estado del ticket."
-              : "Completa la información para registrar un ticket."}
+              ? "Update the details and status of the ticket."
+              : "Complete the information to register a ticket"}
           </p>
         </div>
       </div>
@@ -120,25 +120,25 @@ export function TicketForm({
               id="title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="Resumen breve del problema o tarea"
+              placeholder="Brief description of the issue"
               required
             />
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="description">Descripción</Label>
+            <Label htmlFor="description">Description</Label>
             <Textarea
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Detalles, pasos para reproducir, contexto..."
+              placeholder="Details, stepts to reproduce or context..."
               rows={6}
             />
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="flex flex-col gap-2">
-              <Label htmlFor="category">Categoría</Label>
+              <Label htmlFor="category">Category</Label>
               <Input
                 id="category"
                 value={category}
@@ -147,12 +147,12 @@ export function TicketForm({
               />
             </div>
             <div className="flex flex-col gap-2">
-              <Label htmlFor="tags">Etiquetas</Label>
+              <Label htmlFor="tags">Labels</Label>
               <Input
                 id="tags"
                 value={tags}
                 onChange={(e) => setTags(e.target.value)}
-                placeholder="Separadas por comas"
+                placeholder="Separated by comma"
               />
             </div>
           </div>
@@ -160,7 +160,7 @@ export function TicketForm({
 
         <Card className="flex h-fit flex-col gap-4 p-5">
           <div className="flex flex-col gap-2">
-            <Label htmlFor="status">Estado</Label>
+            <Label htmlFor="status">Status</Label>
             <Select value={status} onValueChange={(v) => setStatus(v as TicketStatus)}>
               <SelectTrigger id="status" className="w-full">
                 <SelectValue />
@@ -176,7 +176,7 @@ export function TicketForm({
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="urgency">Urgencia</Label>
+            <Label htmlFor="urgency">Urgency</Label>
             <Select value={urgency} onValueChange={(v) => setUrgency(v as TicketUrgency)}>
               <SelectTrigger id="urgency" className="w-full">
                 <SelectValue />
@@ -196,10 +196,10 @@ export function TicketForm({
               <Label htmlFor="project">Proyecto</Label>
               <Select value={projectId} onValueChange={(v) => v?setProjectId(v):setProjectId(NO_PROJECT)} >
                 <SelectTrigger id="project" className="w-full">
-                  <SelectValue placeholder="Sin proyecto" />
+                  <SelectValue placeholder="No project" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value={NO_PROJECT}>Sin proyecto</SelectItem>
+                  <SelectItem value={NO_PROJECT}>No Project</SelectItem>
                   {projects.map((p) => (
                     <SelectItem key={p.id} value={p.id}>
                       {p.name}
@@ -211,27 +211,27 @@ export function TicketForm({
           )}
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="assignee">Asignado a</Label>
+            <Label htmlFor="assignee">Assigned to</Label>
             <Input
               id="assignee"
               value={assignee}
               onChange={(e) => setAssignee(e.target.value)}
-              placeholder="Nombre del responsable"
+              placeholder="Name"
             />
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="reporter">Reportado por</Label>
+            <Label htmlFor="reporter">Reported by</Label>
             <Input
               id="reporter"
               value={reporter}
               onChange={(e) => setReporter(e.target.value)}
-              placeholder="Quién reporta"
+              placeholder="Name"
             />
           </div>
 
           <div className="flex flex-col gap-2">
-            <Label htmlFor="due">Fecha límite</Label>
+            <Label htmlFor="due">Limit date</Label>
             <Input
               id="due"
               type="date"
@@ -244,11 +244,11 @@ export function TicketForm({
 
       <div className="flex items-center justify-end gap-3">
         <Button onClick={() => window.location.href = '/'} variant="outline" type="button">
-          <Link href="/">Cancelar</Link>
+          <Link href="/">Cancel</Link>
         </Button>
         <Button type="submit" disabled={loading}>
           {loading && <Loader2 className="size-4 animate-spin" aria-hidden />}
-          {isEdit ? "Guardar cambios" : "Crear ticket"}
+          {isEdit ? "Save changes" : "Create ticket"}
         </Button>
       </div>
     </form>

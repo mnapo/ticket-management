@@ -8,22 +8,22 @@ import type { Project } from "@/lib/types"
 import { FolderGit2, KeyRound } from "lucide-react"
 
 const ENDPOINTS = [
-  { method: "POST", path: "/api/auth/login", desc: "Iniciar sesión y obtener token" },
-  { method: "GET", path: "/api/tickets", desc: "Listar tickets (filtros por query)" },
-  { method: "POST", path: "/api/tickets", desc: "Crear un nuevo ticket" },
-  { method: "GET", path: "/api/tickets/:id", desc: "Obtener ticket e historial" },
-  { method: "PATCH", path: "/api/tickets/:id", desc: "Actualizar / cambiar estado" },
-  { method: "DELETE", path: "/api/tickets/:id", desc: "Eliminar ticket" },
-  { method: "GET", path: "/api/metrics", desc: "Métricas del panel" },
+  { method: "POST", path: "/api/auth/login", desc: "Login and get token" },
+  { method: "GET", path: "/api/tickets", desc: "List tickets (filtered by query)" },
+  { method: "POST", path: "/api/tickets", desc: "Create new ticket" },
+  { method: "GET", path: "/api/tickets/:id", desc: "Get a ticket and its story" },
+  { method: "PATCH", path: "/api/tickets/:id", desc: "Update ticket" },
+  { method: "DELETE", path: "/api/tickets/:id", desc: "Remove ticket" },
+  { method: "GET", path: "/api/metrics", desc: "Get general metrics" },
 ]
 
 export function SettingsPanel({ projects }: { projects: Project[] }) {
   return (
     <div className="grid gap-4 lg:grid-cols-2">
       <Card className="gap-0 p-5">
-        <h2 className="text-sm font-medium">Estados y colores</h2>
+        <h2 className="text-sm font-medium">Status and colors</h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Flujo de trabajo de cada ticket.
+          Tickets Workflow
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
           {TICKET_STATUSES.map((s) => (
@@ -33,9 +33,9 @@ export function SettingsPanel({ projects }: { projects: Project[] }) {
       </Card>
 
       <Card className="gap-0 p-5">
-        <h2 className="text-sm font-medium">Niveles de urgencia</h2>
+        <h2 className="text-sm font-medium">Urgency Levels</h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Prioridad independiente del estado.
+          Priority (status-independant)
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
           {TICKET_URGENCIES.map((u) => (
@@ -47,14 +47,14 @@ export function SettingsPanel({ projects }: { projects: Project[] }) {
       <Card className="gap-0 p-5">
         <div className="flex items-center gap-2">
           <FolderGit2 className="size-4 text-muted-foreground" aria-hidden />
-          <h2 className="text-sm font-medium">Proyectos</h2>
+          <h2 className="text-sm font-medium">Projects</h2>
         </div>
         <p className="mt-1 text-sm text-muted-foreground">
-          Los tickets pueden asociarse a un proyecto.
+          Each ticket is associated to a project.
         </p>
         <ul className="mt-4 flex flex-col gap-2">
           {projects.length === 0 && (
-            <li className="text-sm text-muted-foreground">Aún no hay proyectos.</li>
+            <li className="text-sm text-muted-foreground">There're no projects yet.</li>
           )}
           {projects.map((p) => (
             <li
@@ -81,7 +81,7 @@ export function SettingsPanel({ projects }: { projects: Project[] }) {
           <h2 className="text-sm font-medium">API</h2>
         </div>
         <p className="mt-1 text-sm text-muted-foreground">
-          Endpoints protegidos con JWT. Envía el token en{" "}
+          JWT-protected endpoints. Send the token through{" "}
           <code className="rounded bg-muted px-1 py-0.5 font-mono text-xs">
             Authorization: Bearer &lt;token&gt;
           </code>
