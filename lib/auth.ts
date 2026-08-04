@@ -23,7 +23,7 @@ function getSecret(): Uint8Array {
 }
 
 export async function createSessionToken(user: SessionUser): Promise<string> {
-  return new SignJWT({ email: user.email, name: user.name, role: user.role })
+  return new SignJWT({ email: user.email, name: user.name, role: user.role, project_id: user.project_id ?? null })
     .setProtectedHeader({ alg: "HS256" })
     .setSubject(user.sub)
     .setIssuer(ISSUER)
