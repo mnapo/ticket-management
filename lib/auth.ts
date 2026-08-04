@@ -53,6 +53,7 @@ function payloadToUser(payload: JWTPayload): SessionUser {
     email: String(payload.email ?? ""),
     name: String(payload.name ?? ""),
     role: (payload.role as SessionUser["role"]) ?? "agent",
+    project_id: String(payload.project_id ?? "") || null,
   }
 }
 
