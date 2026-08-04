@@ -10,7 +10,8 @@ export interface SessionUser {
   sub: string
   email: string
   name: string
-  role: "admin" | "agent" | "viewer"
+  role: "admin" | "agent" | "viewer" | "project_viewer"
+  project_id?: string | null
 }
 
 function getSecret(): Uint8Array {
