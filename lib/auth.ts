@@ -1,4 +1,6 @@
 import { SignJWT, jwtVerify, type JWTPayload } from "jose"
+import bcrypt from "bcrypt"
+import { getAdminClient } from "@/lib/supabase/admin"
 
 const COOKIE_NAME = "ticket_session"
 const ISSUER = "ticketing-app"
@@ -44,6 +46,44 @@ export async function verifySessionToken(
     return payloadToUser(payload)
   } catch {
     return null
+  }
+}
+
+export async function validateUserCredentials(
+  email: string,
+  password: string,
+): Promise<SessionUser | null> {
+  const supabase = getAdminClient()
+
+  const { data: user, error } = await supabase
+    .from("app_users")
+    .select("id,email,name,role,project_id,password_hash")
+    .eq("email", email.trim().toLowerCase())
+    .maybeSingle()
+
+  if (error || !user) {
+    return null
+  }
+
+  if (!user.password_hash) {
+    return null
+  }
+
+  const validPassword = await bcrypt.compare(
+    password,
+    user.password_hash,
+  )
+
+  if (!validPassword) {
+    return null
+  }
+
+  return {
+    sub: user.id,
+    email: user.email,
+    name: user.name ?? "",
+    role: user.role,
+    project_id: user.project_id,
   }
 }
 

@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server"
 import {
   createSessionToken,
   SESSION_COOKIE,
-  validateAdminCredentials,
+  validateUserCredentials,
 } from "@/lib/auth"
 
 export async function POST(req: NextRequest) {
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  const user = validateAdminCredentials(email, password)
+  const user = await validateUserCredentials(email, password)
   if (!user) {
     return NextResponse.json({ error: "Credenciales incorrectas" }, { status: 401 })
   }
