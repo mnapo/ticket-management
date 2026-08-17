@@ -18,8 +18,10 @@ export default function LoginPage() {
 function LoginForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
+
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [rememberMe, setRememberMe] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
@@ -31,9 +33,16 @@ function LoginForm() {
     try {
       const res = await fetch("/api/auth/login", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+          rememberMe,
+        }),
       })
+
       const data = await res.json()
 
       if (!res.ok) {
@@ -43,6 +52,7 @@ function LoginForm() {
       }
 
       const from = searchParams.get("from") || "/"
+
       router.push(from)
       router.refresh()
     } catch {
@@ -58,9 +68,11 @@ function LoginForm() {
           <div className="mb-4 flex size-12 items-center justify-center rounded-xl bg-primary text-primary-foreground">
             <Ticket className="size-6" aria-hidden />
           </div>
+
           <h1 className="text-xl font-semibold tracking-tight text-balance">
             Panel de Tickets
           </h1>
+
           <p className="mt-1 text-sm text-muted-foreground">
             Accede con tus credenciales de administrador
           </p>
@@ -73,6 +85,7 @@ function LoginForm() {
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
               <Label htmlFor="email">Correo electrónico</Label>
+
               <Input
                 id="email"
                 type="email"
@@ -86,6 +99,7 @@ function LoginForm() {
 
             <div className="flex flex-col gap-2">
               <Label htmlFor="password">Contraseña</Label>
+
               <Input
                 id="password"
                 type="password"
@@ -97,6 +111,21 @@ function LoginForm() {
               />
             </div>
 
+            <label
+              htmlFor="rememberMe"
+              className="flex cursor-pointer items-center gap-2 text-sm text-muted-foreground"
+            >
+              <input
+                id="rememberMe"
+                type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                className="size-4 rounded border-input"
+              />
+
+              <span>Recordarme</span>
+            </label>
+
             {error && (
               <p
                 role="alert"
@@ -106,8 +135,18 @@ function LoginForm() {
               </p>
             )}
 
-            <Button type="submit" className="mt-1 w-full" disabled={loading}>
-              {loading && <Loader2 className="size-4 animate-spin" aria-hidden />}
+            <Button
+              type="submit"
+              className="mt-1 w-full"
+              disabled={loading}
+            >
+              {loading && (
+                <Loader2
+                  className="size-4 animate-spin"
+                  aria-hidden
+                />
+              )}
+
               {loading ? "Entrando..." : "Iniciar sesión"}
             </Button>
           </div>
