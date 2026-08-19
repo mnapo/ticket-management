@@ -15,7 +15,10 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
-import { MetricsCards } from "@/components/metrics-cards"
+import {
+  MetricsCards,
+  StatusDistribution,
+} from "@/components/metrics-cards"
 import { TicketTable } from "@/components/ticket-table"
 import { SettingsPanel } from "@/components/settings-panel"
 import {
@@ -245,6 +248,8 @@ export function Dashboard({
             tickets={filtered}
             projects={projects}
           />
+
+          <StatusDistribution metrics={metrics} />
         </TabsContent>
 
         <TabsContent value="config">
