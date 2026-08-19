@@ -37,3 +37,20 @@ SUPABASE_SERVICE_ROLE_KEY=
 - (PATCH) /api/tickets/:id
 - (DELETE) /api/tickets/:id
 - (GET) /api/metrics
+
+## Screenshots
+
+### Basic metrics
+![Basic metrics screenshot](assets/screenshots/metrics-summary.png)
+
+### Tickets section
+![Tickets section screenshot](assets/screenshots/tickets.png)
+
+### Distribution by status
+![Distribution by status screenshot](assets/screenshots/metrics-distribution-status.png)
+
+### New ticket
+![New ticket screenshot](assets/screenshots/new-ticket.png)
+
+### Ticket history
+![Ticket history screenshot](assets/screenshots/history.png)
