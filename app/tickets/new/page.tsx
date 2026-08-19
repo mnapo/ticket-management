@@ -10,7 +10,7 @@ export default async function NewTicketPage() {
   const session = await getSession()
   if (!session) redirect("/login")
 
-  const projects = await listProjects()
+  const projects = await listProjects(session)
 
   return (
     <div className="min-h-screen">
