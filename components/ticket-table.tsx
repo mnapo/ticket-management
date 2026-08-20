@@ -137,7 +137,7 @@ export function TicketTable({
               data-busy={busyId === t.id}
             >
               <TableCell className="font-mono text-xs text-muted-foreground">
-                {String(index + 1).padStart(3, "0")}
+                {String(tickets.length - index).padStart(3, "0")}
               </TableCell>
 
               <TableCell>
