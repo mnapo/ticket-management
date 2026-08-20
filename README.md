@@ -26,6 +26,27 @@ SUPABASE_JWT_SECRET=
 SUPABASE_SECRET_KEY=
 SUPABASE_SERVICE_ROLE_KEY=
 ```
+
+- generate superuser:
+```
+create extension if not exists pgcrypto;
+
+insert into app_users (
+  id,
+  email,
+  password_hash,
+  name,
+  role
+)
+values (
+  gen_random_uuid(),
+  'superuser@email.com',
+  crypt('your_supersecret_password', gen_salt('bf')),
+  'Administrador',
+  'admin'
+);
+```
+
 - run ```npm run dev```
 
 ## API
