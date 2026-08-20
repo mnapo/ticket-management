@@ -230,14 +230,14 @@ export function TicketTable({
                   </DropdownMenuTrigger>
 
                   <DropdownMenuContent align="end">
-                    <DropdownMenuItem>
-                      <Link href={`/tickets/${t.id}`}>
-                        <Pencil
-                          className="size-4"
-                          aria-hidden
-                        />
-                        Edit
-                      </Link>
+                    <DropdownMenuItem
+                      onClick={() => router.push(`/tickets/${t.id}`)}
+                    >
+                      <Pencil
+                        className="size-4"
+                        aria-hidden
+                      />
+                      Edit
                     </DropdownMenuItem>
 
                     <DropdownMenuSeparator />
