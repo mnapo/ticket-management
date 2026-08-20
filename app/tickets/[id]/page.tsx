@@ -4,6 +4,7 @@ import {
   getTicket,
   getTicketEvents,
   listProjects,
+  listUsers,
 } from "@/lib/data"
 import { AppHeader } from "@/components/app-header"
 import { TicketForm } from "@/components/ticket-form"
@@ -32,8 +33,9 @@ export default async function EditTicketPage({
     notFound()
   }
 
-  const [projects, events] = await Promise.all([
+  const [projects, users, events] = await Promise.all([
     listProjects(session),
+    listUsers(),
     getTicketEvents(id, session),
   ])
 
@@ -48,6 +50,10 @@ export default async function EditTicketPage({
         <TicketForm
           ticket={ticket}
           projects={projects}
+          users={users}
+          userRole={session.role}
+          userProjectId={session.project_id}
+          userId={session.sub}
         />
 
         <Card className="gap-0 p-5">

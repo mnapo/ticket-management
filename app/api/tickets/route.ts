@@ -108,25 +108,34 @@ export async function POST(req: NextRequest) {
     const ticket = await createTicket(
       {
         title: body.title as string,
+
         description:
           (body.description as string) ?? null,
+
         status: body.status as
           | TicketStatus
           | undefined,
+
         urgency: body.urgency as
           | TicketUrgency
           | undefined,
+
         category:
           (body.category as string) ?? null,
+
         tags: Array.isArray(body.tags)
           ? (body.tags as string[])
           : [],
-        assignee:
-          (body.assignee as string) ?? null,
-        reporter:
-          (body.reporter as string) ?? null,
+
+        assignee_id:
+          (body.assignee_id as string) ?? null,
+
+        reporter_id:
+          (body.reporter_id as string) ?? null,
+
         project_id:
           (body.project_id as string) ?? null,
+
         due_date:
           (body.due_date as string) ?? null,
       },

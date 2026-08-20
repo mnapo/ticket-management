@@ -100,27 +100,37 @@ export async function PATCH(
     const ticket = await updateTicket(
       id,
       {
-        title: body.title as string | undefined,
+        title:
+          body.title as string | undefined,
+
         description:
           body.description as string | undefined,
+
         status:
           body.status as
             | TicketStatus
             | undefined,
+
         urgency:
           body.urgency as
             | TicketUrgency
             | undefined,
+
         category:
           body.category as string | undefined,
+
         tags:
           body.tags as string[] | undefined,
-        assignee:
-          body.assignee as string | undefined,
-        reporter:
-          body.reporter as string | undefined,
+
+        assignee_id:
+          body.assignee_id as string | null | undefined,
+
+        reporter_id:
+          body.reporter_id as string | null | undefined,
+
         project_id:
           body.project_id as string | undefined,
+
         due_date:
           body.due_date as string | undefined,
       },
