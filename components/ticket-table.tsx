@@ -204,7 +204,9 @@ export function TicketTable({
               </TableCell>
 
               <TableCell className="hidden text-sm lg:table-cell">
-                {t.assignee ?? (
+                {t.assignee ? (
+                  t.assignee.name ?? t.assignee.email
+                ) : (
                   <span className="text-muted-foreground">
                     Sin asignar
                   </span>
