@@ -30,7 +30,10 @@ import type {
   TicketUrgency,
   UserRole,
 } from "@/lib/types"
-import { Loader2, ArrowLeft } from "lucide-react"
+import {
+  Loader2,
+  ArrowLeft,
+} from "lucide-react"
 
 const NO_PROJECT = "none"
 const NO_USER = "none"
@@ -47,32 +50,41 @@ export function TicketForm({
   projects: Project[]
   users: AppUser[]
   userRole: UserRole
-  userProjectId: string | null
+  userProjectId?: string | null
   userId: string
 }) {
   const router = useRouter()
   const isEdit = Boolean(ticket)
   const isAdmin = userRole === "admin"
-  const [loading, setLoading] = useState(false)
+
+  const [loading, setLoading] =
+    useState(false)
 
   const firstAdmin =
-    users.find((user) => user.role === "admin") ?? null
+    users.find(
+      (user) => user.role === "admin",
+    ) ?? null
 
-  const defaultReporterId = isAdmin
-    ? ticket?.reporter_id ?? NO_USER
+  const initialReporterId = isAdmin
+    ? ticket?.reporter?.id ??
+      ticket?.reporter_id ??
+      NO_USER
     : userId
 
-  const defaultAssigneeId = isAdmin
-    ? ticket?.assignee_id ?? NO_USER
+  const initialAssigneeId = isAdmin
+    ? ticket?.assignee?.id ??
+      ticket?.assignee_id ??
+      NO_USER
     : firstAdmin?.id ?? NO_USER
 
   const [title, setTitle] = useState(
     ticket?.title ?? "",
   )
 
-  const [description, setDescription] = useState(
-    ticket?.description ?? "",
-  )
+  const [description, setDescription] =
+    useState(
+      ticket?.description ?? "",
+    )
 
   const [status, setStatus] =
     useState<TicketStatus>(
@@ -84,30 +96,34 @@ export function TicketForm({
       ticket?.urgency ?? "media",
     )
 
-  const [category, setCategory] = useState(
-    ticket?.category ?? "",
-  )
+  const [category, setCategory] =
+    useState(
+      ticket?.category ?? "",
+    )
 
   const [assigneeId, setAssigneeId] =
-    useState(defaultAssigneeId)
+    useState(initialAssigneeId)
 
   const [reporterId, setReporterId] =
-    useState(defaultReporterId)
+    useState(initialReporterId)
 
-  const [dueDate, setDueDate] = useState(
-    ticket?.due_date ?? "",
-  )
+  const [dueDate, setDueDate] =
+    useState(
+      ticket?.due_date ?? "",
+    )
 
-  const [tags, setTags] = useState(
-    (ticket?.tags ?? []).join(", "),
-  )
+  const [tags, setTags] =
+    useState(
+      (ticket?.tags ?? []).join(", "),
+    )
 
   const [projectId, setProjectId] =
     useState(
       ticket?.project_id ??
         (isAdmin
           ? NO_PROJECT
-          : userProjectId ?? NO_PROJECT),
+          : userProjectId ??
+            NO_PROJECT),
     )
 
   async function handleSubmit(
@@ -124,26 +140,28 @@ export function TicketForm({
 
     const payload = {
       title: title.trim(),
+
       description:
         description.trim() || null,
+
       status,
+
       urgency,
+
       category:
         category.trim() || null,
 
-      assignee_id:
-        isAdmin
-          ? assigneeId === NO_USER
-            ? null
-            : assigneeId
-          : undefined,
+      assignee_id: isAdmin
+        ? assigneeId === NO_USER
+          ? null
+          : assigneeId
+        : undefined,
 
-      reporter_id:
-        isAdmin
-          ? reporterId === NO_USER
-            ? null
-            : reporterId
-          : undefined,
+      reporter_id: isAdmin
+        ? reporterId === NO_USER
+          ? null
+          : reporterId
+        : undefined,
 
       due_date: dueDate || null,
 
@@ -164,9 +182,12 @@ export function TicketForm({
           ? `/api/tickets/${ticket!.id}`
           : "/api/tickets",
         {
-          method: isEdit ? "PATCH" : "POST",
+          method: isEdit
+            ? "PATCH"
+            : "POST",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type":
+              "application/json",
           },
           body: JSON.stringify(payload),
         },
@@ -258,7 +279,9 @@ export function TicketForm({
               id="description"
               value={description}
               onChange={(e) =>
-                setDescription(e.target.value)
+                setDescription(
+                  e.target.value,
+                )
               }
               placeholder="Details, stepts to reproduce or context..."
               rows={6}
@@ -275,7 +298,9 @@ export function TicketForm({
                 id="category"
                 value={category}
                 onChange={(e) =>
-                  setCategory(e.target.value)
+                  setCategory(
+                    e.target.value,
+                  )
                 }
                 placeholder="Bug, Feature, Infra..."
               />
@@ -306,8 +331,10 @@ export function TicketForm({
 
             <Select
               value={status}
-              onValueChange={(v) =>
-                setStatus(v as TicketStatus)
+              onValueChange={(value) =>
+                setStatus(
+                  value as TicketStatus,
+                )
               }
             >
               <SelectTrigger
@@ -318,14 +345,20 @@ export function TicketForm({
               </SelectTrigger>
 
               <SelectContent>
-                {TICKET_STATUSES.map((s) => (
-                  <SelectItem
-                    key={s}
-                    value={s}
-                  >
-                    {STATUS_META[s].label}
-                  </SelectItem>
-                ))}
+                {TICKET_STATUSES.map(
+                  (status) => (
+                    <SelectItem
+                      key={status}
+                      value={status}
+                    >
+                      {
+                        STATUS_META[
+                          status
+                        ].label
+                      }
+                    </SelectItem>
+                  ),
+                )}
               </SelectContent>
             </Select>
           </div>
@@ -337,9 +370,9 @@ export function TicketForm({
 
             <Select
               value={urgency}
-              onValueChange={(v) =>
+              onValueChange={(value) =>
                 setUrgency(
-                  v as TicketUrgency,
+                  value as TicketUrgency,
                 )
               }
             >
@@ -351,14 +384,20 @@ export function TicketForm({
               </SelectTrigger>
 
               <SelectContent>
-                {TICKET_URGENCIES.map((u) => (
-                  <SelectItem
-                    key={u}
-                    value={u}
-                  >
-                    {URGENCY_META[u].label}
-                  </SelectItem>
-                ))}
+                {TICKET_URGENCIES.map(
+                  (urgency) => (
+                    <SelectItem
+                      key={urgency}
+                      value={urgency}
+                    >
+                      {
+                        URGENCY_META[
+                          urgency
+                        ].label
+                      }
+                    </SelectItem>
+                  ),
+                )}
               </SelectContent>
             </Select>
           </div>
@@ -371,9 +410,9 @@ export function TicketForm({
 
               <Select
                 value={projectId}
-                onValueChange={(v) =>
+                onValueChange={(value) =>
                   setProjectId(
-                    v || NO_PROJECT,
+                    value || NO_PROJECT,
                   )
                 }
               >
@@ -385,18 +424,22 @@ export function TicketForm({
                 </SelectTrigger>
 
                 <SelectContent>
-                  <SelectItem value={NO_PROJECT}>
+                  <SelectItem
+                    value={NO_PROJECT}
+                  >
                     No Project
                   </SelectItem>
 
-                  {projects.map((p) => (
-                    <SelectItem
-                      key={p.id}
-                      value={p.id}
-                    >
-                      {p.name}
-                    </SelectItem>
-                  ))}
+                  {projects.map(
+                    (project) => (
+                      <SelectItem
+                        key={project.id}
+                        value={project.id}
+                      >
+                        {project.name}
+                      </SelectItem>
+                    ),
+                  )}
                 </SelectContent>
               </Select>
             </div>
@@ -409,7 +452,9 @@ export function TicketForm({
 
             <Select
               value={assigneeId}
-              onValueChange={setAssigneeId}
+              onValueChange={
+                setAssigneeId
+              }
               disabled={!isAdmin}
             >
               <SelectTrigger
@@ -420,7 +465,9 @@ export function TicketForm({
               </SelectTrigger>
 
               <SelectContent>
-                <SelectItem value={NO_USER}>
+                <SelectItem
+                  value={NO_USER}
+                >
                   None
                 </SelectItem>
 
@@ -429,7 +476,7 @@ export function TicketForm({
                     key={user.id}
                     value={user.id}
                   >
-                    {user.name ||
+                    {user.name ??
                       user.email}
                   </SelectItem>
                 ))}
@@ -444,7 +491,9 @@ export function TicketForm({
 
             <Select
               value={reporterId}
-              onValueChange={setReporterId}
+              onValueChange={
+                setReporterId
+              }
               disabled={!isAdmin}
             >
               <SelectTrigger
@@ -455,7 +504,9 @@ export function TicketForm({
               </SelectTrigger>
 
               <SelectContent>
-                <SelectItem value={NO_USER}>
+                <SelectItem
+                  value={NO_USER}
+                >
                   None
                 </SelectItem>
 
@@ -464,7 +515,7 @@ export function TicketForm({
                     key={user.id}
                     value={user.id}
                   >
-                    {user.name ||
+                    {user.name ??
                       user.email}
                   </SelectItem>
                 ))}
@@ -482,7 +533,9 @@ export function TicketForm({
               type="date"
               value={dueDate ?? ""}
               onChange={(e) =>
-                setDueDate(e.target.value)
+                setDueDate(
+                  e.target.value,
+                )
               }
             />
           </div>
